@@ -5,18 +5,27 @@ const path =  require('path');
 const  mongoose =   require('mongoose');
 const morgan = require('morgan');
 const bodyParser =require('body-parser');
-
-
-
+const cors = require('cors');
 //declaraciones
 app.set('port', process.env.PORT || 8888); 
-
-//configuraciones
-
-
+//configurationa
+var whitelist = ['http://localhost:4200' , 'http://localhost:8888', 'http://example2.com'];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+}
+}
+//CONFIGURATION FOR ALL ROUTES COURS
+app.all('*' , cors());
 
 //configuraciones de middlewares
-app.use(express.static(path.resolve(__dirname , '../public')));
+app.use(express.static(path.join( __dirname , '../uploads' )));
+// app.use(express.static(path.resolve(__dirname , '../public')));
+
 app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json())
 app.use(morgan('tiny'));

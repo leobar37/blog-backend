@@ -1,8 +1,17 @@
+//nodejs modules
+const rutas=  require('path');
 
+//npm dependences
+const uuid  =require('uuid/v4');
 const fileUpload = require('express-fileupload');
-const {validExtension, saveImage}  = require('../lib/helpers');
-const  Entrada =  require('../models/entrada.model');
 const   _= require('underscore');
+//helpers
+const {validExtension, saveImage  ,eliminarImagen}  = require('../lib/helpers');
+//Bd
+const Usuario =  require('../models/usuario.model');
+const  Entrada =  require('../models/entrada.model');
+
+
 class  ControlUpload {
 
     constructor(app){
@@ -16,7 +25,7 @@ class  ControlUpload {
      */
   uploadImageBlog(idPost , file) {
        ///recibir el id del post
-        let pathUpload =  'uploads/';
+        let pathUpload =  'uploads/posts/';
         return new Promise( async (resolve , reject) => {
             
      let rptaExtension = validExtension(file.name);
@@ -43,6 +52,7 @@ class  ControlUpload {
      NumImages++;
      let name =  `${idPost}-${NumImages}.${rptaExtension}`;
      pathUpload =  pathUpload.concat(name);
+     let path = '/posts/'+name;
      //guardar la  imagen
      await saveImage(file , pathUpload).catch (err =>{
           reject( { ok : false , err});
@@ -50,15 +60,43 @@ class  ControlUpload {
      imagesAux.push(pathUpload);
      let updatePost =await Entrada.findByIdAndUpdate(idPost , { images : imagesAux } );
      if(updatePost){       
-             resolve( { ok   : true  , messaje : 'agregado correctamente' , path  : name});
+             resolve( { ok   : true  , messaje : 'agregado correctamente' , path  : path});
      }
  }); //end promise
-        
   }//end function
-     
+
+  uploadImageUsuario(idUs , file) {
+              ///recibir el id del post
+           let pathUpload =  'uploads/usuarios/';
+           return new Promise( async (resolve , reject) => {
+                  
+           let rptaExtension = validExtension(file.name);
+           if(!rptaExtension){
+               return reject( { ok : false , error : 'extension no valida'});   
+           }   
+           //guardar el archivo
+           let usuario = await Usuario.findById(idUs).catch(err=>{ 
+           reject({ ok :false ,  err});
+           });
+            //ruta de la imagen anterior
+            let imageAnt = usuario.img; 
+           let name =  `${idUs}-${uuid()}.${rptaExtension}`;
+           pathUpload =  pathUpload.concat(name);
+           let path = '/usuarios/'+name;
+           //guardar la  imagen
+           await saveImage(file , pathUpload).catch (err =>{
+                reject( { ok : false , err});
+           });
+           let updateUs =await Usuario.findByIdAndUpdate(idUs , { img : path} );
+           if(updateUs){       
+                    //eliminar imagen anterior
+                     eliminarImagen( rutas.join(__dirname , '../../uploads'+imageAnt ));
+                    // eliminarImagen(rutas.join(__dirname , '' ));
+                   resolve( { ok   : true  , messaje : 'agregado correctamente' , path  : path});
+           }
+       }); //end promise
+  }
 }
-
-
 
 module.exports  = {
      ControlUpload

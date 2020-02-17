@@ -16,7 +16,7 @@ let  usuarioSchema =  new Schema( {
     
 });
 
-usuarioSchema.plugin(uniqueValidator, {message : '{PATH} es requerido'});
+usuarioSchema.plugin(uniqueValidator, {message : '{PATH} exists '});
 
 //anular la contraseña al traer un usuario
 // usuarioSchema.methods.generateHash = function (password) { 

@@ -23,8 +23,7 @@ const validExtension =   (fileName)=>{
    let particion =  fileName.split('.');
    let extension =  particion[particion.length - 1];
    let permitidos  = ['jpg' , 'gif' , 'png'];
-   
-   console.log(extension);
+
    
    if(permitidos.indexOf(extension) < 0){
        return false;
@@ -58,5 +57,6 @@ const validExtension =   (fileName)=>{
   module.exports = {
      verify ,
       validExtension,
-      saveImage
+      saveImage ,
+      eliminarImagen
   }

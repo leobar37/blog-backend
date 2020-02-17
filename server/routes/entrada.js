@@ -2,6 +2,10 @@ const {EntradaCont}  = require('../classes/entrada');
 const  express  = require('express');
 const router =  express.Router();
 const _ =  require('underscore');
+const  path = require('path');
+//node modules
+const fs = require('fs');
+
 //middlewares
 const {authorization}  =require('../middlewares/middlewar');
 const controlEntrada =  new EntradaCont();
@@ -9,10 +13,9 @@ const controlEntrada =  new EntradaCont();
 //crear entradas
 router.post('/entrada', [authorization],(req , res)=> {
    let body = req.body;
-
    body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords']);
      controlEntrada.crearEntrada(body)
-     .then(res => res.json(res))
+     .then(resp => res.json(resp))
      .catch(err => res.json(err));
 });
 //listar entradas
@@ -43,8 +46,29 @@ router.get('/entrada/:id' , (req , res)=>{
   let id =  req.params.id;
   controlEntrada.buscarEntrada(id).then(entrada => res.json(entrada))
   .catch(err=> res.json(err)); 
+  
 });
+"uploads/posts/5e4a1ce8dab44a18f8b7fb61-1.jpg", 
 
+router.get('/uploads/posts/:nameImage' , (req , res)=>{
+
+ let fileName =  req.params.nameImage;
+   let imageUrl =  'posts/'+fileName;
+
+  let ruta = path.resolve(__dirname, `../../uploads/${imageUrl}`);     
+  if(!fs.existsSync(ruta)){
+   return    res.json({ ok : false ,messaje: 'no exists'});
+  }else{
+     res.sendFile(ruta);
+  }
+
+ // let patA = path.resolve( __dirname ,'../../uploads/5e439646aa8abe5f187e65c3-1.jpg');
+  
+  //console.log(patA);
+
+  //res.sendFile(patA,);
+//  res.sendFile(pat2);
+});
 
 module.exports =  router;
 

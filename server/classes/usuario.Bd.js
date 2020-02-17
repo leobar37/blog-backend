@@ -1,6 +1,11 @@
+//Bd  Models
 const Usuario =  require('../models/usuario.model');
-const bcrypt = require('bcrypt');
+//constants
 const {saltsRounds}  = require('../keys');
+
+//npm dependences
+const bcrypt = require('bcrypt');
+const jwt =  require('jsonwebtoken');
 class controlUsuario {
 
   /** * agregar un usuario * traer todos los usuarios * dar de baja a a un usuario * buscar un usuario * editar un usario
@@ -19,9 +24,16 @@ class controlUsuario {
                estado : data.estado,
                google : data.google
             });
+       
             usuario.save((err , usuario)=>{ 
-                if(err) reject({ok : false , message :'BD error' , err});      
-                 if(usuario) resolve({ok : true,  usuario});
+                if(err) reject({ok : false , message :'BD error' , err});   
+                      
+                 if(usuario)  
+                  {
+                    //generate token
+                    let token =  jwt.sign({data :  usuario } , process.env.SEED  , {expiresIn : process.env.expira})
+                    resolve({ok : true,  usuario  , token : token})
+                  };
             });//end save
         
         });//end promise
@@ -60,7 +72,7 @@ class controlUsuario {
     } );//end promise
    }
    getUser(id){
-       return  new Promise((reject, resolve)=>{
+       return  new Promise((resolve, reject)=>{
            Usuario.findById(id ,( err , user)=>{
             if(err) reject({ok : false , message :'BD error' , err});      
             resolve({ok :true , user})

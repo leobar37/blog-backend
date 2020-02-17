@@ -1,5 +1,5 @@
 const Entrada = require('../models/entrada.model');
- 
+const path =  require('path');
 /*=============================================
 =            metodos de la base de datos           =
 =============================================
@@ -15,7 +15,6 @@ listar extracto de una entrada
 class EntradaCont {
     
   constructor(){     
-   
   }
   listarEntradas(desde, hasta){
      return new Promise(( resolve , reject)=>{
@@ -42,7 +41,6 @@ class EntradaCont {
      return new Promise((resolve, reject)=>{
         let blog =  new Entrada({
             title: data.titulo,
-            images : data.images,
             body : data.body,
             extracto : data.extracto,
             autor: data.autor, 
@@ -72,7 +70,6 @@ class EntradaCont {
 
         Entrada.findByIdAndUpdate(id,{
             title: data.titulo,
-            images : data.images,
             body : data.body,
             extracto : data.extracto,
             autor: data.autor, 
@@ -83,8 +80,22 @@ class EntradaCont {
             if(!entrada) reject({ ok : false,messaje: 'entrada no encontrada'});
             resolve({ ok : true, entrada});       
         });//bd
-  });//promesa
+     });//promesa
   }
+  //servir imagenes de posr
+ getImagesPost(idPost) {
+  return new Promise(async (resolve , reject)=>{
+
+       let entrada = await  Entrada.findById(idPost).catch(err=> reject ( { 
+           ok  : false , err
+        }))
+        if(!entrada ||  !entrada.images){
+          return reject({ ok  : false   ,  messaje : 'no image'});
+        }else{
+           resolve({ok:false , images : entrada['images'] });
+        }         
+  });//end promise 
+ }
 }
 
 module.exports =  {

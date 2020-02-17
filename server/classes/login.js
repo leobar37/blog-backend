@@ -20,6 +20,7 @@ class ControLogin {
   3.hacer el token 
   4. devolver el token
  */    constructor(){}
+ 
     loguinNormal(data){
      
          return new Promise((resolve , reject)=> {
@@ -33,7 +34,7 @@ class ControLogin {
                  
                 if(!bcrypt.compareSync(password , userBd.password))reject({ok : false ,message : 'gmail/contraseña incorrectos'});
 
-                let token = jws.sign( { data :  userBd} , process.env.SEED ,{expiresIn :process.env.expira});
+                let token = jwt.sign( { data :  userBd} , process.env.SEED ,{expiresIn :process.env.expira});
 
                 resolve( { ok : true , token : token , userBd});
 
