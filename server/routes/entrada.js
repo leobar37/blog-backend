@@ -11,9 +11,9 @@ const {authorization}  =require('../middlewares/middlewar');
 const controlEntrada =  new EntradaCont();
 
 //crear entradas
-router.post('/entrada', [authorization],(req , res)=> {
+router.post('/entrada',(req , res)=> {
    let body = req.body;
-   body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords']);
+   body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords' , "tipo" ,"fecha"]);
      controlEntrada.crearEntrada(body)
      .then(resp => res.json(resp))
      .catch(err => res.json(err));
@@ -34,7 +34,7 @@ router.get('/entrada/listar/:termino' , ( req  , res)=>{
   .catch(err => res.json(err));
 });
 //editar una entrada
-router.put('/entrada/:id',[authorization] ,(req , res)=>{
+router.put('/entrada/:id' ,(req , res)=>{
  let id = req.params.id;
  let body = req.body;
  body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords']);
@@ -48,7 +48,8 @@ router.get('/entrada/:id' , (req , res)=>{
   .catch(err=> res.json(err)); 
   
 });
-"uploads/posts/5e4a1ce8dab44a18f8b7fb61-1.jpg", 
+
+//"uploads/posts/5e4a1ce8dab44a18f8b7fb61-1.jpg", 
 
 router.get('/uploads/posts/:nameImage' , (req , res)=>{
 
@@ -61,13 +62,10 @@ router.get('/uploads/posts/:nameImage' , (req , res)=>{
   }else{
      res.sendFile(ruta);
   }
-
- // let patA = path.resolve( __dirname ,'../../uploads/5e439646aa8abe5f187e65c3-1.jpg');
-  
-  //console.log(patA);
-
-  //res.sendFile(patA,);
-//  res.sendFile(pat2);
+// let patA = path.resolve( __dirname ,'../../uploads/5e439646aa8abe5f187e65c3-1.jpg');
+//console.log(patA);
+//res.sendFile(patA,);
+//res.sendFile(pat2);
 });
 
 module.exports =  router;

@@ -17,7 +17,7 @@ process.env.CLIENT_ID = process.env.CLIENT_ID || '792650140448-pr64fgoo3hr96r5lv
 let urlDB ;
 
 if(process.env.NODE_ENV === 'dev'){
-     urlDB = 'mongodb://localhost:27017/blog'
+     urlDB = 'mongodb://localhost:27017/blog2'
 }else{
     urlDb = process.env.MONGO_URI;
 }

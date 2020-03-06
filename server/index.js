@@ -48,7 +48,7 @@ rptaBd().then(Data => {
 //rutas
 app.use(require('./routes/index'));
 //correr puerto |
-app.listen( app.get ('port')  ,()=> {
+app.listen( app.get('port')  ,()=> {
  console.log('Listen in port'+ app.get('port'));
 })
 

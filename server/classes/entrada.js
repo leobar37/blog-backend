@@ -1,5 +1,9 @@
 const Entrada = require('../models/entrada.model');
-const path =  require('path');
+
+//nodde js modules 
+
+const fs  = require('fs');
+
 /*=============================================
 =            metodos de la base de datos           =
 =============================================
@@ -44,7 +48,11 @@ class EntradaCont {
             body : data.body,
             extracto : data.extracto,
             autor: data.autor, 
-            keywords : data.keywords
+            keywords : data.keywords,
+            tipoblog : data.tipo,
+            fechaPublicacion : data.fecha,
+            autor :  data.autor
+            
         })
         blog.save( (err , entrada)=>{
            
@@ -83,17 +91,21 @@ class EntradaCont {
      });//promesa
   }
   //servir imagenes de posr
- getImagesPost(idPost) {
+ getImagesPost(imageUrl) {
   return new Promise(async (resolve , reject)=>{
+   
+  
 
-       let entrada = await  Entrada.findById(idPost).catch(err=> reject ( { 
-           ok  : false , err
-        }))
-        if(!entrada ||  !entrada.images){
-          return reject({ ok  : false   ,  messaje : 'no image'});
-        }else{
-           resolve({ok:false , images : entrada['images'] });
-        }         
+  // rutas.join(__dirname , '../../uploads'+imageAnt )
+    
+      //  let entrada = await  Entrada.findById(idPost).catch(err=> reject ( { 
+      //      ok  : false , err
+      //   }))
+      //   if(!entrada ||  !entrada.images){
+      //     return reject({ ok  : false   ,  messaje : 'no image'});
+      //   }else{
+      //      resolve({ok:false , images : entrada['images'] });
+      //   }         
   });//end promise 
  }
 }
