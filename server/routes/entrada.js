@@ -62,10 +62,7 @@ router.get('/uploads/posts/:nameImage' , (req , res)=>{
   }else{
      res.sendFile(ruta);
   }
-// let patA = path.resolve( __dirname ,'../../uploads/5e439646aa8abe5f187e65c3-1.jpg');
-//console.log(patA);
-//res.sendFile(patA,);
-//res.sendFile(pat2);
+
 });
 
 module.exports =  router;

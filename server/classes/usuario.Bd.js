@@ -24,7 +24,7 @@ class controlUsuario {
                estado : data.estado,
                google : data.google
             });
-       
+            
             usuario.save((err , usuario)=>{ 
                 if(err) reject({ok : false , message :'BD error' , err});   
                       

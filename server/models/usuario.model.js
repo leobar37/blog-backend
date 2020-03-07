@@ -28,8 +28,6 @@ usuarioSchema.plugin(uniqueValidator, {message : '{PATH} exists '});
 // usuarioSchema.methods.validatePassword = function (password) {
 //      return  bcrypt.compareSync(password , this.local.password);
 //   }
-
-
 //borrar la contraseña al servir un usuario
 usuarioSchema.methods.toJSON = function() {
      let user  = this ;

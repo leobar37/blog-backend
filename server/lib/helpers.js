@@ -15,9 +15,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
      }
      return user;
   }
-
  /* --------------helpers upload-------------- */
-
  //validar extension
 const validExtension =   (fileName)=>{
    let particion =  fileName.split('.');
@@ -33,23 +31,30 @@ const validExtension =   (fileName)=>{
     
  };
  //save image server
- const  saveImage =  (sampleFile , path) =>{
-    return new Promise( (resolve  , reject)=> {
-      sampleFile.mv(path , (err)=>{ 
-          if(err)return reject( {  ok  : false ,  error : 'upload image'  , err});
-          else {
-              resolve( { ok : true ,err : 'upload succefful'});
-          }
-      });   
- 
+ //ahora va recibir un arreglo de imagenes
+ const  saveImage =  (files , path , names ) =>{
+     return new Promise( async (resolve  , reject)=> {
+       let cont = 0;
+         for (const archivo of  files) {
+              archivo.mv(path + names[cont] , (err)=>{      
+             }); 
+              cont++;
+        }
+        resolve({ok : true})
     });//end promise
  }
- 
- ///eliminar imagen 
- const  eliminarImagen  = (ruta)=>{
+
+ const  eliminarImagen  =async (ruta)=>{
      if(fs.existsSync(ruta)){
          fs.unlinkSync(ruta);
      }
+ }
+
+ const elimanarImagenes = async (names, pathGeneral)=>{
+      for(const name  of names){
+         let patEliminar =  pathGeneral + name;
+         await eliminarImagen(patEliminar);
+      }
  }
 
  /* --------*------ end helpers upload-----*--------- */
@@ -58,5 +63,6 @@ const validExtension =   (fileName)=>{
      verify ,
       validExtension,
       saveImage ,
-      eliminarImagen
+      eliminarImagen,
+      elimanarImagenes
   }

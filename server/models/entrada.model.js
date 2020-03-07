@@ -10,9 +10,7 @@ let blog  = new Schema( {
        type :String ,
        required  : [ true , 'El titulo de su entrada es requerida']
     } ,
-    images : { 
-       type : [String]
-    },
+    images : [ { type : Schema.Types.ObjectId  , ref : 'Imagen'}],
     body : {
       type : String
     },
@@ -26,7 +24,6 @@ let blog  = new Schema( {
      },
      fechaPublicacion:  {
         type : String,
-
       //   default :  String
      },
      visible :  {
