@@ -20,11 +20,8 @@ let verificaRol =  (req, res, next)=> {
          next();
     }else{
          return res.json( {ok :  false  ,meessage : 'acceso denegado'})
-    }
-     
+    }    
 }
-
-
 module.exports = {
      authorization ,
      verificaRol

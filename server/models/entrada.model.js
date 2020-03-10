@@ -14,6 +14,7 @@ let blog  = new Schema( {
     body : {
       type : String
     },
+    categoria : { type : String  },
     extracto : {
        type:  String,
       //  required : [true , 'El extracto del blog es necesario']

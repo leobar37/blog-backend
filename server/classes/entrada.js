@@ -73,19 +73,16 @@ class EntradaCont {
         });//bd
      });//promesa
   }
-  //servir imagenes de posr
- getImagesPost(imageUrl) {
-  return new Promise(async (resolve , reject)=>{
-  // rutas.join(__dirname , '../../uploads'+imageAnt )
-      //  let entrada = await  Entrada.findById(idPost).catch(err=> reject ( { 
-      //      ok  : false , err
-      //   }))
-      //   if(!entrada ||  !entrada.images){
-      //     return reject({ ok  : false   ,  messaje : 'no image'});
-      //   }else{
-      //      resolve({ok:false , images : entrada['images'] });
-      //   }         
-  });//end promise 
- }
+  eliminarEntrada(id){
+      return new Promise( (resolve , reject)=>{
+        const entrada  =Entrada.findByIdAndDelete(id).catch(err=>{
+            reject({ok: false , err})
+        })
+        .then(entrada =>{
+          resolve({ok: true , entrada});
+        });
+      
+      });
+  }
 }
 module.exports={EntradaCont}

@@ -49,22 +49,27 @@ router.get('/entrada/:id' , (req , res)=>{
   
 });
 
+router.delete('/entrada/:id' , (req, res)=>{
+  const { id  } =  req.params;
+
+   controlEntrada.eliminarEntrada(id)
+   .then(resp => res.json(resp))
+   .catch(err => res.json(err))
+   
+});
 //"uploads/posts/5e4a1ce8dab44a18f8b7fb61-1.jpg", 
 
-router.get('/uploads/posts/:nameImage' , (req , res)=>{
-
- let fileName =  req.params.nameImage;
-   let imageUrl =  'posts/'+fileName;
-
-  let ruta = path.resolve(__dirname, `../../uploads/${imageUrl}`);     
-  if(!fs.existsSync(ruta)){
-   return    res.json({ ok : false ,messaje: 'no exists'});
-  }else{
-     res.sendFile(ruta);
-  }
-
-});
-
+// router.get('/uploads/posts/:nameImage' , (req , res)=>{
+//  let fileName =  req.params.nameImage;
+//  let imageUrl =  'posts/'+fileName;
+//   let ruta = path.resolve(__dirname, `../../uploads/${imageUrl}`);     
+//   if(!fs.existsSync(ruta)){
+//     ruta = path.resolve(__dirname, `../../uploads/noimage.jpg`); 
+//    return     res.sendFile(ruta);
+//   }else{
+//      res.sendFile(ruta);
+//   }
+// });
 module.exports =  router;
 
 

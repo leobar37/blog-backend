@@ -20,7 +20,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 const validExtension =   (fileName)=>{
    let particion =  fileName.split('.');
    let extension =  particion[particion.length - 1];
-   let permitidos  = ['jpg' , 'gif' , 'png'];
+   let permitidos  = ['jpg' , 'gif' , 'png', 'jpeg'];
 
    
    if(permitidos.indexOf(extension) < 0){
