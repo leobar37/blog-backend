@@ -1,6 +1,9 @@
 const Entrada = require('../models/entrada.model');
 const Usuario = require('../models/usuario.model');
+const Imagen = require('../models/imagenes');
 const fs  = require('fs');
+const path = require('path');
+const { elimanarImagenes} = require('../lib/helpers');
 class EntradaCont {
   constructor(){}
   listarEntradas(desde, hasta){
@@ -33,7 +36,7 @@ class EntradaCont {
             autor: autor, 
             keywords : data.keywords,
             tipoblog : data.tipo,
-            fechaPublicacion : data.fecha,
+            // fechaPublicacion : data.fecha,
             autor :  data.autor
         });
         blog.save( async (err , entrada)=>{
@@ -55,7 +58,7 @@ class EntradaCont {
         if(err) reject({ ok : false,messaje: 'BD error'});
         if(!entrada) reject({ ok : false,messaje: 'entrada no encontrada'});
          resolve({ ok : true  , entrada});
-      }).populate('autor');
+      }).populate('autor').populate('images');
     });
   }
    actualizarEntrada(id , data){
@@ -74,14 +77,21 @@ class EntradaCont {
      });//promesa
   }
   eliminarEntrada(id){
-      return new Promise( (resolve , reject)=>{
-        const entrada  =Entrada.findByIdAndDelete(id).catch(err=>{
+      return new Promise( async (resolve , reject)=>{
+        const entrada  = await Entrada.findByIdAndDelete(id).catch(err=>{
             reject({ok: false , err})
         })
-        .then(entrada =>{
+         if(entrada){
+          let pat = path.join(__dirname , '../../uploads/posts/')
+        for(const  imagen of  entrada.images) {
+             let imagenBorrada = await Imagen.findByIdAndDelete(imagen);
+           if(imagenBorrada)
+           await elimanarImagenes(imagenBorrada.imagenes ,  pat);
+        }
           resolve({ok: true , entrada});
-        });
-      
+         }else{
+           reject( { ok :  false , messaje : 'entrada no encontrada'  })
+         }
       });
   }
 }

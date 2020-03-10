@@ -32,7 +32,6 @@ router.post('/upload/usuario/:id' , (req , res)=>{
         })
     }
     let file = req.files.image;
-    
      ctrLUpload.uploadImageUsuario(idUs , file)
     .then( resp =>res.json(resp))
     .catch(err  => res.json(err));

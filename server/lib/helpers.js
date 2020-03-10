@@ -52,7 +52,7 @@ const validExtension =   (fileName)=>{
 
  const elimanarImagenes = async (names, pathGeneral)=>{
       for(const name  of names){
-         let patEliminar =  pathGeneral + name;
+         let patEliminar =  pathGeneral + name; 
          await eliminarImagen(patEliminar);
       }
  }

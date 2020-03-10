@@ -1,8 +1,7 @@
 const express=require('express');
 const router =  express.Router();
 const path = require('path');
-
-
+const fs=require('fs');
 /*=============================================
 =            servir imagenes de posts y usuarios            =
 =============================================*/
@@ -23,7 +22,14 @@ router.get('/uploads/:tipo/:nameImage' , (req , res)=>{
            ruta = path.resolve(__dirname, `../../uploads/noimage.jpg`); 
            break;
     }
+    if(fs.existsSync(ruta))
     res.sendFile(ruta);
+    else
+    {
+        ruta = path.resolve(__dirname, `../../uploads/noimage.jpg`);
+        res.sendFile(ruta);
+    }
+    
 });
 
 

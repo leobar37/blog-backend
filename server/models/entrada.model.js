@@ -1,4 +1,5 @@
 const mongoose =require ('mongoose');
+const { format, render, cancel,  register } =  require('timeago.js');
 
 const Schema = mongoose.Schema;
 // const { PORTADA ,RELEVANTE }  =require('../keys');
@@ -24,7 +25,8 @@ let blog  = new Schema( {
        ref : 'Usuario'
      },
      fechaPublicacion:  {
-        type : String,
+        type : Date,
+        default : Date.now()
       //   default :  String
      },
      visible :  {
@@ -37,6 +39,11 @@ let blog  = new Schema( {
 
 })
 
-
+blog.methods.toJSON =  function(){
+    let blog =  this;
+    let entrada = blog.toObject();
+    entrada.fechaPublicacion =  format(entrada.fechaPublicacion); 
+    return entrada;
+}
 
 module.exports =mongoose.model('Entrada' , blog);

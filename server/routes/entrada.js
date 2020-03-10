@@ -51,7 +51,7 @@ router.get('/entrada/:id' , (req , res)=>{
 
 router.delete('/entrada/:id' , (req, res)=>{
   const { id  } =  req.params;
-
+  
    controlEntrada.eliminarEntrada(id)
    .then(resp => res.json(resp))
    .catch(err => res.json(err))
