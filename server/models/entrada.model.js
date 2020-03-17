@@ -25,8 +25,8 @@ let blog  = new Schema( {
        ref : 'Usuario'
      },
      fechaPublicacion:  {
-        type : Date,
-        default : Date.now()
+        type : Number,
+
       //   default :  String
      },
      visible :  {
@@ -39,6 +39,10 @@ let blog  = new Schema( {
 
 })
 
+// function  trDate(value){
+//      let  timeAGO =  format(value); 
+//    return  132324;
+// }
 blog.methods.toJSON =  function(){
     let blog =  this;
     let entrada = blog.toObject();

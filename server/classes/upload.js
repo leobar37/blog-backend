@@ -56,7 +56,7 @@ class  ControlUpload {
  }); //end promise
   }//end function
 
-  uploadImageUsuario(idUs , files) {
+  uploadImageUsuario(idUs , file) {
               ///recibir el id del post
            let pathUpload =  'uploads/usuarios/';
            return new Promise( async (resolve , reject) => {
@@ -64,26 +64,35 @@ class  ControlUpload {
            let rptaExtension = validExtension(file.name);
            if(!rptaExtension){
                return reject( { ok : false , error : 'extension no valida'});   
-           }   
-           //guardar el archivo
-           let usuario = await Usuario.findById(idUs).catch(err=>{ 
-           reject({ ok :false ,  err});
-           });
+              }   
+              //guardar el archivo
+              let usuario = await Usuario.findById(idUs).catch(err=>{ 
+                reject({ ok :false ,  err});
+              });
             //ruta de la imagen anterior
+            
             let imageAnt = usuario.img; 
-           let name =  `${idUs}-${uuid()}.${rptaExtension}`;
-           pathUpload =  pathUpload.concat(name);
-           let path = '/usuarios/'+name;
+            let name =  `${idUs}-${uuid()}.${rptaExtension}`;
+            pathUpload =  pathUpload.concat(name);
+            let path = '/usuarios/'+name;
            //guardar la  imagen
-           await saveImage(file , pathUpload).catch (err =>{
-                reject( { ok : false , err});
-           });
-           let updateUs =await Usuario.findByIdAndUpdate(idUs , { img : path} );
+           file.mv(pathUpload , (err)=>{      
+             if(err) reject({ ok : false , message :'imagen no valida'})
+          });          
+           let updateUs =await Usuario.findByIdAndUpdate( idUs , { img : name} , {new : true} );       
+           
            if(updateUs){       
              //eliminar imagen anterior
-             eliminarImagen( rutas.join(__dirname , '../../uploads'+imageAnt ));
-             resolve( { ok   : true  , messaje : 'agregado correctamente' , path  : path});
-           }
+             console.log('imagen anterior');
+              console.log(imageAnt);
+               let ruta = rutas.join(__dirname , '../../uploads/usuarios/'+imageAnt );
+               console.log(ruta);
+               
+              await eliminarImagen(ruta);
+             resolve( { ok   : true  , updateUs, path  : path});
+            }else{
+              return reject( { ok : false , error : 'no se pudo actualizar el usuario'});   
+            }
        }); //end promise
   }
   //editar imagenes

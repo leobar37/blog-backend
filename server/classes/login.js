@@ -36,7 +36,7 @@ class ControLogin {
 
                 let token = jwt.sign( { data :  userBd} , process.env.SEED ,{expiresIn :process.env.expira});
 
-                resolve( { ok : true , token : token , userBd});
+                resolve( { ok : true , token : token , userBd :userBd});
 
             });//end Bd
          });//end promise
@@ -45,8 +45,8 @@ class ControLogin {
      loguinGoogle(token){
         return new Promise( async (resolve , reject)=>{
             let user  = await verify(token).catch(e => {
-                 reject( { ok: false , e} )
-            })      
+                 reject(e)
+            })           
             if(!user)return reject({ok : false , message : 'no encontrado'})      
                User.findOne({email : user.email}, (err , userBD)=> {
                  if(err) reject({ ok :  false ,err});
@@ -68,12 +68,8 @@ class ControLogin {
                         resolve({ ok :  true, token  , token , resp });
                        
                      }).catch(err => reject(err));
-
                  }
-                  
              });//end Bd
-           
-         
           
         });//end promise
      }

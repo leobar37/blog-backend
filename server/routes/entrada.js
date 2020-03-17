@@ -48,28 +48,28 @@ router.get('/entrada/:id' , (req , res)=>{
   .catch(err=> res.json(err)); 
   
 });
-
+//eliinar una entrada
 router.delete('/entrada/:id' , (req, res)=>{
   const { id  } =  req.params;
-  
    controlEntrada.eliminarEntrada(id)
    .then(resp => res.json(resp))
    .catch(err => res.json(err))
-   
 });
-//"uploads/posts/5e4a1ce8dab44a18f8b7fb61-1.jpg", 
+//listar entradas por autor
+router.get('/porautor/:id', (req , res)=>{
+  const { id } = req.params;
+ controlEntrada.listarEntradasporAutor(id)
+ .then( resp => res.json(resp))
+ .catch(err => res.json(err));
+});
+//buscar entradas por para la pantalla principal
 
-// router.get('/uploads/posts/:nameImage' , (req , res)=>{
-//  let fileName =  req.params.nameImage;
-//  let imageUrl =  'posts/'+fileName;
-//   let ruta = path.resolve(__dirname, `../../uploads/${imageUrl}`);     
-//   if(!fs.existsSync(ruta)){
-//     ruta = path.resolve(__dirname, `../../uploads/noimage.jpg`); 
-//    return     res.sendFile(ruta);
-//   }else{
-//      res.sendFile(ruta);
-//   }
-// });
+router.get('/principal/:tipo',  (req,  res )=>{
+  const { tipo }  = req.params;
+    controlEntrada.listarPostPrincipal(tipo )
+ .then(  resp  => res.json( resp)) ;
+})
+
 module.exports =  router;
 
 

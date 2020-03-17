@@ -14,7 +14,7 @@ const router = express.Router();
 //crear usuario
 router.post('/usuario' , (req ,res) =>{
   let body =  req.body;
-   body = _.pick(body ,[ 'nombre','email' ,'password' ,'img' ,'role' , 'estado' ,'google' ] );
+   body = _.pick(body ,[ 'nombre','email' ,'password'  ,'role' , 'estado' ,'google' ,'redes' ,'descripcion' ] );
    userControl.agregarUsuario(body)
    .then(resp => res.json(resp))
    .catch(err => res.json(err));
@@ -36,10 +36,11 @@ router.get('/usuario' , [ authorization , verificaRol] ,(req ,res) =>{
 
 });
 //actulizar un usuario
-router.put('/usuario/:id', [authorization] ,  (req ,res) =>{
+//falta la autorizacion
+router.put('/usuario/:id' ,  (req ,res) =>{
     let id  = req.params.id;
     let body =  req.body;
-    body = _.pick(body ,[ 'nombre','email' ,'password' ,'img' ,'role' , 'estado' ,'google' ] );
+    body = _.pick(body ,[ 'nombre','email' ,'password' ,'role' , 'estado' ,'google' , 'redes' , 'descripcion'] );
     userControl.updateUser(body , id)
     .then(resp => res.json( resp))
     .catch(err => res.json(err));

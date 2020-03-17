@@ -13,7 +13,12 @@ router.post('/login' , (req, res)=>{
     .catch(err=> res.json(err)); 
 });
 router.post('/google'  , (req, res)=>{ 
-  let token  = req.body.idtoken;
+  let token  =  req.body.idtoken;
+  // token =  token.split('.')[1];
+  console.log('token');
+  
+  console.log(token);
+    
   if(token)
      ctrlLoguin.loguinGoogle(token).then(resp => res.json(resp) )
      .catch(err => res.json(err));

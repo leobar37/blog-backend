@@ -22,7 +22,9 @@ class controlUsuario {
                   img : data.img,
                  role :  data.role,
                estado : data.estado,
-               google : data.google
+               google : data.google,
+               redes : data.redes,
+               descripcion: data.descripcion
             });
             
             usuario.save((err , usuario)=>{ 
@@ -56,12 +58,14 @@ class controlUsuario {
          
        Usuario.findByIdAndUpdate(id ,{
                      nombre:  data.nombre,
-                     email : data.email ,
-                  password :  bcrypt.hashSync(data.password, saltsRounds),
-                       img : data.img,
+                    //  email : data.email ,
+                  // password :  bcrypt.hashSync(data.password, saltsRounds),
+                      //  img : data.img,
+                      redes : data.redes,
                       role :  data.role,
                     estado : data.estado,
-                    google : data.google
+                    google : data.google,
+                    descripcion: data.descripcion
       } , {new :  true} , (err, userUpdate)=>{
         if(err) reject({ok : false , message :'BD error' , err});      
          resolve({ ok : true ,userUpdate })

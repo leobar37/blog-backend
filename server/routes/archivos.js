@@ -10,7 +10,7 @@ router.get('/uploads/:tipo/:nameImage' , (req , res)=>{
     let fileName =  req.params.nameImage;
     const { tipo } = req.params;
     let imageUrl =  fileName;
-     let ruta = path.resolve(__dirname, `../../uploads/${imageUrl}`);     
+     let ruta = '';     
     switch(tipo){
         case 'usuarios':
             ruta = path.resolve(__dirname, `../../uploads/${tipo}/${imageUrl}`);  
