@@ -6,4 +6,5 @@ router.use(require('./usuarios'));
 router.use(require('./login'));
 router.use(require('./upload'));
 router.use(require('./archivos'));
+router.use(require('./categoria'));
 module.exports =  router;

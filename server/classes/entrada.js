@@ -7,24 +7,23 @@ const d3 = require('d3-time');
 const { elimanarImagenes} = require('../lib/helpers');
 class EntradaCont {
   constructor(){}
-  listarEntradas(desde, hasta){
+  // listarEntradasxCategoria(desde, hasta){
+  //    return new Promise(( resolve , reject)=>{
+  //       Entrada.find({})
+  //       .populate('images')
+  //       .populate('autor' , 'nombre') 
+  //       .skip(desde).limit(hasta).exec((err,docs)=>{
+  //           //error de base de datos
+  //           if(err) reject({ ok : false,messaje: 'BD error'});
+  //           resolve({ok :true , docs});
+  //       }) 
+  //    })
+  // }
+  listarEntradasxCantidad(desde, hasta){
      return new Promise(( resolve , reject)=>{
-        Entrada.find({})
-        .populate('images')
-        .populate('autor' , 'nombre') 
-        .skip(desde).limit(hasta).exec((err,docs)=>{
-            //error de base de datos
-            if(err) reject({ ok : false,messaje: 'BD error'});
-            resolve({ok :true , docs});
-        }) 
-     })
-  }
-  listarEntradasxTermino(desde, hasta, termino){
-     return new Promise(( resolve , reject)=>{
-       //expresion regular terminos 
-      ///buscar etradas mas recientes
-      let rgx = new RegExp(termino , 'i');
-        Entrada.find({title : rgx}).skip(desde).limit(hasta).populate('autor').exec((err,docs)=>{
+        Entrada.find({ borrador : false || undefined})
+        .sort({fechaPublicacion : 1}) 
+        .skip(desde).limit(hasta).populate('autor').populate('images').exec((err,docs)=>{
             //error de base de datos
             if(err) reject({ ok : false,messaje: 'BD error'});
             resolve({ok :false , docs});
@@ -37,17 +36,8 @@ class EntradaCont {
          /*=============================================
          =            funciones            =
          =============================================*/
-         let buscar = async (condicion)=>{
-          let docs  = await  Entrada.find({}).populate('autor').populate('images');
-           return docs;  
-           }
             let postsDestacados = async () =>{
-              let todos =  await buscar({});   
-                todos = todos.sort( function (a  , b){
-                  let antes =   new Date(a.fechaPublicacion);
-                  let despues = new Date(b.fechaPublicacion);
-                  return antes > despues;
-                })
+              let todos  =  await  Entrada.find({ borrador : false || undefined}).populate('autor').populate('images').sort({fechaPublicacion : -1});
             return todos;
            }
         if(tipo == 'ordenado'){
@@ -64,10 +54,12 @@ class EntradaCont {
             body : data.body,
             extracto : data.extracto,
             autor: autor, 
+            categoria : data.categoria,
             keywords : data.keywords,
             tipoblog : data.tipo,
             fechaPublicacion : data.fecha,
-            autor :  data.autor
+            autor :  data.autor,
+            borrador : data.borrador
         });
         blog.save( async (err , entrada)=>{
             if(err) reject({ ok :false ,messaje: 'BD error'  ,err}); 
@@ -97,8 +89,10 @@ class EntradaCont {
             title: data.titulo,
             body : data.body,
             extracto : data.extracto,
-            autor: data.autor, 
-            keywords : data.keywords
+            borrador : data.borrador,
+            // autor: data.autor, 
+            keywords : data.keywords,
+            categoria : data.categoria
         } , { new :  true} ,  (err , entrada)=>{
             if(err) reject({ ok :false ,messaje: 'BD error'}); 
             if(!entrada) reject({ ok : false,messaje: 'entrada no encontrada'});

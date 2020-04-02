@@ -5,7 +5,6 @@ const fs=require('fs');
 /*=============================================
 =            servir imagenes de posts y usuarios            =
 =============================================*/
-
 router.get('/uploads/:tipo/:nameImage' , (req , res)=>{
     let fileName =  req.params.nameImage;
     const { tipo } = req.params;
@@ -17,7 +16,10 @@ router.get('/uploads/:tipo/:nameImage' , (req , res)=>{
             break;
         case 'posts' : 
             ruta = path.resolve(__dirname, `../../uploads/${tipo}/${imageUrl}`);
-            break;  
+            break;
+        case  'ram' : 
+            ruta = path.resolve(__dirname, `../../uploads/${tipo}/${imageUrl}`);
+        break ;         
         default : 
            ruta = path.resolve(__dirname, `../../uploads/noimage.jpg`); 
            break;
@@ -29,8 +31,8 @@ router.get('/uploads/:tipo/:nameImage' , (req , res)=>{
         ruta = path.resolve(__dirname, `../../uploads/noimage.jpg`);
         res.sendFile(ruta);
     }
-    
 });
+
 
 
 

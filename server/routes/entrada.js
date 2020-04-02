@@ -13,31 +13,33 @@ const controlEntrada =  new EntradaCont();
 //crear entradas
 router.post('/entrada',(req , res)=> {
    let body = req.body;
-   body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords' , "tipo" ,"fecha"]);
-     controlEntrada.crearEntrada(body)
+   body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords' , "tipo" ,"fecha" ,"categoria" ,"borrador"]);
+   controlEntrada.crearEntrada(body)
      .then(resp => res.json(resp))
      .catch(err => res.json(err));
 });
-//listar entradas
-router.get('/entrada/listar' , ( req  , res)=>{
-     let desde = Number(req.query.desde);
-     let hasta  =  Number(req.query.hasta);
-     controlEntrada.listarEntradas(desde,hasta).then(entradas => res.json(entradas))
-     .catch(err => res.json(err));
-});
+// //listar entradas
+// router.get('/entrada/listar' , ( req  , res)=>{
+//      let desde = Number(req.query.desde);
+//      let hasta  =  Number(req.query.hasta);
+//      controlEntrada.listarEntradas(desde,hasta).then(entradas => res.json(entradas))
+//      .catch(err => res.json(err));
+// });
 //listat entrdas por termino 
-router.get('/entrada/listar/:termino' , ( req  , res)=>{
+router.get('/entrada/listar' , ( req  , res)=>{
   let desde = Number(req.query.desde);
   let hasta  =  Number(req.query.hasta);
   let termin =  req.params.termino;
-  controlEntrada.listarEntradasxTermino(desde,hasta ,termin).then(entradas => res.json(entradas))
+  controlEntrada.listarEntradasxCantidad(desde,hasta).then(entradas => res.json(entradas))
   .catch(err => res.json(err));
 });
 //editar una entrada
 router.put('/entrada/:id' ,(req , res)=>{
  let id = req.params.id;
  let body = req.body;
- body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords']);
+ body = _.pick(body,['titulo' , 'images' ,'body' ,'extracto','autor','keywords' ,"categoria" ,"borrador"]);
+ console.log(body);
+ 
  controlEntrada.actualizarEntrada(id , body).then(resp => res.json(resp))
  .catch(err=> res.json(err));
 });
@@ -66,6 +68,8 @@ router.get('/porautor/:id', (req , res)=>{
 
 router.get('/principal/:tipo',  (req,  res )=>{
   const { tipo }  = req.params;
+  let desde = Number(req.query.desde);
+  let hasta  =  Number(req.query.hasta);
     controlEntrada.listarPostPrincipal(tipo )
  .then(  resp  => res.json( resp)) ;
 })

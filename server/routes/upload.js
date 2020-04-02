@@ -46,5 +46,12 @@ router.put('/upload/imgs/:id' ,  (req , res)=>{
 
 })
 //return images post
-
+router.post('/uploads/ram' , (req , res )=>{
+    const file = req.files.ram;
+    console.log(file);
+    ctrLUpload.uploadImagenRam(file)
+    .then( resp =>  res.json(resp))
+    .catch( err =>  res.json(err));
+   
+});
 module.exports   =  router;

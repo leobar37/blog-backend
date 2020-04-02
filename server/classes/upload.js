@@ -55,7 +55,26 @@ class  ControlUpload {
 //
  }); //end promise
   }//end function
-
+  uploadImagenRam(file) {
+    ///recibir el id del post
+ let pathUpload =  'uploads/ram/';
+ return new Promise( async (resolve , reject) => {
+        
+ let rptaExtension = validExtension(file.name);
+ if(!rptaExtension){
+     return reject( { ok : false , error : 'extension no valida'});   
+    }   
+  //ruta de la imagen anterior
+  let name =  `${uuid()}+ram.${rptaExtension}`;
+  pathUpload =  pathUpload.concat(name);
+ //guardar la  imagen
+ file.mv(pathUpload , (err)=>{      
+   if(err) reject({ ok : false , message :'imagen no valida'})
+   console.log('guardo');
+  });          
+  resolve( { link : 'http://localhost:8888/' + pathUpload});
+}); //end promise
+}
   uploadImageUsuario(idUs , file) {
               ///recibir el id del post
            let pathUpload =  'uploads/usuarios/';

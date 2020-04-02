@@ -22,6 +22,7 @@ switch(tabla){
      res.json({ok : false , result : 'collecion no especificada'}) 
 }
 });
+
 /*=============================================
 =            ruta de busca total            =
 =============================================*/
@@ -40,8 +41,8 @@ router.get('/todos/:termino', async (req , res )=> {
 
 function buscarEntradas(rgx) {
  return new Promise( async ( resolve , reject )=>{   
-    const docs  =  await Entrada.find({title :  rgx })
-          .populate('autor');
+    const docs  =  await Entrada.find({title : rgx})
+          .populate('autor').populate('images');
        resolve(docs);
  })    
 }

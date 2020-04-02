@@ -15,7 +15,7 @@ let blog  = new Schema( {
     body : {
       type : String
     },
-    categoria : { type : String  },
+    categoria : { type : Schema.Types.ObjectId },
     extracto : {
        type:  String,
       //  required : [true , 'El extracto del blog es necesario']
@@ -26,8 +26,9 @@ let blog  = new Schema( {
      },
      fechaPublicacion:  {
         type : Number,
-
-      //   default :  String
+     },
+     categoria : {
+         type :  Schema.Types.ObjectId 
      },
      visible :  {
         type :  Boolean,
@@ -35,7 +36,11 @@ let blog  = new Schema( {
      },
      keywords: {
         type  : [String]
-     }
+     } ,
+    borrador : { 
+         type : Boolean ,
+         default : false
+    }
 
 })
 

@@ -27,15 +27,10 @@ class ControLogin {
             let email = data.email;
             let password =  data.password;
             User.findOne( { email :  email },(err , userBd)=>{
-               
                 if(err) reject({ok : false  ,err});
-                 
                 if(!userBd)return reject({ok : false ,message : 'gmail/contraseña incorrectos'});
-                 
                 if(!bcrypt.compareSync(password , userBd.password))reject({ok : false ,message : 'gmail/contraseña incorrectos'});
-
                 let token = jwt.sign( { data :  userBd} , process.env.SEED ,{expiresIn :process.env.expira});
-
                 resolve( { ok : true , token : token , userBd :userBd});
 
             });//end Bd
@@ -62,7 +57,6 @@ class ControLogin {
                         password : ':)',
                         role : 'editor'
                      }
-                     
                      ctlUsuario.agregarUsuario(data).then( resp => {
                         let token  = jwt.sign({data: data} , process.env.SEED , {expiresIn : process.env.expira});
                         resolve({ ok :  true, token  , token , resp });
