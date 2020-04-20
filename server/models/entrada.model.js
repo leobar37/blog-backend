@@ -7,6 +7,10 @@ let blog  = new Schema( {
     tipoblog : {
      type : Number,   
     },
+   visitas : {
+      type : Number,
+       default : 0
+   },
     title: {
        type :String ,
        required  : [ true , 'El titulo de su entrada es requerida']
@@ -40,8 +44,10 @@ let blog  = new Schema( {
     borrador : { 
          type : Boolean ,
          default : false
-    }
-
+    },
+   comentarios : {
+       type : [Schema.Types.ObjectId]    
+   }
 })
 
 // function  trDate(value){

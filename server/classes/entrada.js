@@ -77,7 +77,7 @@ class EntradaCont {
   buscarEntrada(id){
     return new Promise((resolve, reject)=>{
     Entrada.findById(id, (err, entrada)=>{
-        if(err) reject({ ok : false,messaje: 'BD error'});
+        if(err) reject({ ok : false,messaje: 'BD error', err});
         if(!entrada) reject({ ok : false,messaje: 'entrada no encontrada'});
          resolve({ ok : true  , entrada});
       }).populate('autor').populate('images');

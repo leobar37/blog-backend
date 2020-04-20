@@ -2,14 +2,7 @@ const fs = require('fs');
 const SECRET =  'MTs0jz4CKnAbhEnvoWz-mmDL';
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID , SECRET, '');
- const verify =async function(token) {
-    //  let to  = client.getTokenInfo(token).catch( err =>{
-    //        console.log(err);
-           
-    //  });
-    //  console.log('token raro');
-    //   console.log(to);
-      
+ const verify =async function(token) {      
      const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.CLIENT_ID,  

@@ -1,7 +1,6 @@
 const  {Schema ,model  } = require('mongoose');
 
 let categoria = new Schema({
- 
     nombre : { 
         type :String, 
         required : true

@@ -13,7 +13,6 @@ const authorization =  (req , res, next) =>{
       next();
    });
 }
-
 let verificaRol =  (req, res, next)=> {
      let usuarioReq =  req.usuario ;
     if(usuarioReq.role === "admin"){

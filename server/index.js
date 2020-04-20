@@ -2,9 +2,7 @@ require('./config/config');
 const { app} =require('./app');
 const  mongoose =   require('mongoose');
 const  http = require('http');
-
-
-
+const { Sockets} = require('./sockets/socket');
 //declaraciones
 //configurationa
 //configuracion de base de datos
@@ -22,14 +20,13 @@ rptaBd().then(Data => {
 }).catch(err => {
   console.log('Error en la conexion' , err);
 });
-//rutas
-
+/*=============================================
+=            configuracion de los sockets            =
+=============================================*/
 const server = http.createServer(app);
 const io =  require('socket.io')(server);
-io.on('connection', ()=>{
-  console.log('sockets conectados');
-})
-//correr puerto |
+new Sockets(io); 
+//correr puerto 
 server.listen(app.get('port') , ()=>{
   console.log('listen in port : ' + app.get('port'));
   
