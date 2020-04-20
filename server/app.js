@@ -2,7 +2,7 @@ const express = require('express')
 const app =  express();
 
 const path =  require('path');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const bodyParser =require('body-parser');
 const cors = require('cors');
 var whitelist = ['http://localhost:4200' , 'http://localhost:8888', 'http://example2.com'];
@@ -26,7 +26,7 @@ app.use(express.static(path.join( __dirname , '../public' )));
 
 app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json())
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 
 app.use(require('./routes/index'));
 
