@@ -4,7 +4,8 @@
   "description": "Proveedor de blog",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "start": "node server/index.js"
   },
   "author": "Leobar37",
   "license": "ISC",
