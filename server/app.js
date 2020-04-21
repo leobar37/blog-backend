@@ -18,7 +18,7 @@ var corsOptions = {
 app.set('port', process.env.PORT || 8888); 
 
 //CONFIGURATION FOR ALL ROUTES COURS
-app.all('*' , cors());
+app.all('*' , cors(corsOptions));
 app.use(express.static(path.join( __dirname , '../uploads' )));
 app.use(express.static(path.join( __dirname , '../public' )));
 

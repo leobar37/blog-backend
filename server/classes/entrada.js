@@ -7,18 +7,7 @@ const d3 = require('d3-time');
 const { elimanarImagenes} = require('../lib/helpers');
 class EntradaCont {
   constructor(){}
-  // listarEntradasxCategoria(desde, hasta){
-  //    return new Promise(( resolve , reject)=>{
-  //       Entrada.find({})
-  //       .populate('images')
-  //       .populate('autor' , 'nombre') 
-  //       .skip(desde).limit(hasta).exec((err,docs)=>{
-  //           //error de base de datos
-  //           if(err) reject({ ok : false,messaje: 'BD error'});
-  //           resolve({ok :true , docs});
-  //       }) 
-  //    })
-  // }
+
   listarEntradasxCantidad(desde, hasta){
      return new Promise(( resolve , reject)=>{
         Entrada.find({ borrador : false || undefined})
