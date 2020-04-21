@@ -1,4 +1,4 @@
-require('./config/config');
+const  { urlDb } = require('./config/config');
 const { app} =require('./app');
 const  mongoose =   require('mongoose');
 const  http = require('http');
@@ -7,7 +7,7 @@ const { Sockets} = require('./sockets/socket');
 //configurationa
 //configuracion de base de datos
 const rptaBd  =  async ()=> {
-  return await mongoose.connect (String(process.env.urlDb ),{
+  return await mongoose.connect ( urlDb,{
     useNewUrlParser : true,
     useUnifiedTopology : true,
     useCreateIndex : true,

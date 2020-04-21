@@ -34,7 +34,11 @@ process.env.SEED  = "PROYECTOSUPERSEGUROXD";
 =            EXPIRA TOKEN            =
 =============================================*/
 process.env.expira = '48h';
-process.env.urlDB =  urlDB;
+// process.env.urlDB =  urlDB;
+
+module.exports = {
+     urlDB
+}
 
 
 
