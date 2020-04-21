@@ -5,9 +5,7 @@ const _ =  require('underscore');
 const ctrlLoguin =  new ControLogin();
 
 router.post('/login' , (req, res)=>{
-    let body  = req.body;
-    console.log(body);
-    
+    let body  = req.body;    
      body =   _.pick(body , ['password', 'email']);
     ctrlLoguin.loguinNormal(body).then(resp =>res.json(resp))
     .catch(err=> res.json(err)); 

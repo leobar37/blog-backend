@@ -20,8 +20,9 @@ process.env.CLIENT_ID = process.env.CLIENT_ID || '792650140448-2p45ji7q3durlj89o
 process.env.secret  =   process.env.secret ||  'aB9B-ABqiGKJOiZgA3_PSm5I';
 let urlDB ;
 
-if(process.env.NODE_ENV === 'dev'){
+if(process.env.NODE_ENV == 'dev'){
      urlDB = 'mongodb://localhost:27017/blog2'
+    // urlDB ="mongodb+srv://Leobar37:wfFdhC4E7IA3xbaR@cluster0-tk5zi.mongodb.net/test?retryWrites=true&w=majority";
 }else{
     urlDb = process.env.MONGO_URI;
 }
@@ -32,12 +33,7 @@ process.env.SEED  = "PROYECTOSUPERSEGUROXD";
 /*=============================================
 =            EXPIRA TOKEN            =
 =============================================*/
-
 process.env.expira = '48h';
-
-
-
-
 process.env.urlDB =  urlDB;
 
 

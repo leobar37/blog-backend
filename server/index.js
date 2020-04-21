@@ -7,7 +7,7 @@ const { Sockets} = require('./sockets/socket');
 //configurationa
 //configuracion de base de datos
 const rptaBd  =  async ()=> {
-  return await mongoose.connect (process.env.urlDb ,{
+  return await mongoose.connect (String(process.env.urlDb ),{
     useNewUrlParser : true,
     useUnifiedTopology : true,
     useCreateIndex : true,
