@@ -28,10 +28,12 @@ class controlUsuario {
             });
             
             usuario.save((err , usuario)=>{ 
+              console.log('guardando', err);
                 if(err) reject({ok : false , message :'BD error' , err});   
-                      
                  if(usuario)  
                   {
+                    console.log(usuario);
+                    
                     //generate token
                     let token =  jwt.sign({data :  usuario } , process.env.SEED  , {expiresIn : process.env.expira})
                     resolve({ok : true,  usuario  , token : token})

@@ -28,11 +28,12 @@ class ControLogin {
             let password =  data.password;
             User.findOne( { email :  email },(err , userBd)=>{
                 if(err) reject({ok : false  ,err});
+                console.log('pasamos de aqui');
                 if(!userBd)return reject({ok : false ,message : 'gmail/contraseña incorrectos'});
                 if(!bcrypt.compareSync(password , userBd.password))reject({ok : false ,message : 'gmail/contraseña incorrectos'});
                 let token = jwt.sign( { data :  userBd} , process.env.SEED ,{expiresIn :process.env.expira});
+                console.log('dato devueto');
                 resolve( { ok : true , token : token , userBd :userBd});
-
             });//end Bd
          });//end promise
         
