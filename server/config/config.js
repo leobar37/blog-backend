@@ -25,15 +25,10 @@ if(process.env.NODE_ENV === 'dev'){
 }else{
     urlDb = process.env.MONGO_URI;
 }
-
-
 /*=============================================
 =            seed jwt            =
 =============================================*/
-
-process.env.SEED  = "PROYECTOBLOGSEGUROXD";
-
-
+process.env.SEED  = "PROYECTOSUPERSEGUROXD";
 /*=============================================
 =            EXPIRA TOKEN            =
 =============================================*/
