@@ -6,6 +6,7 @@ const router = express.Router();
  //control
  let userControl = new controlUsuario();
 router.post('/usuario' , (req ,res) =>{
+  let body =  req.body;
    body = _.pick(body ,[ 'nombre','email' ,'password'  ,'role' , 'estado' ,'google' ,'redes' ,'descripcion' ] );
    userControl.agregarUsuario(body)
    .then(resp => res.json(resp))
